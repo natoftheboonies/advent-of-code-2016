@@ -21,12 +21,22 @@ def move(state):
 	for e_new in [e+1, e-1]:
 		if e_new > 3 or e_new < 0:
 			continue
+		if e_new==0 and len(floors[0])==0:
+			continue
+		if e_new==1 and e==2 and len(floors[0])==0 and len(floors[1])==0:
+			continue
 		tried_pair = False
-		for choice in list(combinations(floors[e],1))+list(combinations(floors[e],2)):
+		for choice in list(combinations(floors[e],2))+list(combinations(floors[e],1)):
+
+			if len(choice)==2 and e_new < e:
+				# don't bring 2 things down
+				pass
 			if sum(choice)==0:
 				# if moving chip+generator up, equivalent to any other pair
 				if tried_pair:
 					continue
+
+
 			floors_new = list(floors[:min(e_new,e)])
 			if e_new > e:
 				floors_new.append(tuple(x for x in floors[e] if x not in choice))
@@ -62,15 +72,16 @@ import heapq
 
 def bfs(start):
 	visited = set()
+	moves = {start:0}
 	queue = []
-	heapq.heappush(queue,(cost(start),(start,0)))
+	heapq.heappush(queue,(0,start))
 	#queue.append((start,0))
 
 	iters=0
 	while queue:
 		iters+=1
-		cst,blah = heapq.heappop(queue)
-		state, depth = blah
+		_,state = heapq.heappop(queue)
+		depth = moves[state]
 		visited.add(state)
 		for next_state in move(state):
 			if all(len(floor)==0 for floor in next_state[1:-1]):
@@ -78,7 +89,10 @@ def bfs(start):
 				return depth+1
 			if next_state in visited:
 				continue
-			heapq.heappush(queue,(depth-cost(next_state),(next_state,depth+1)))
+			if next_state in moves and moves[next_state]<depth+1:
+				continue
+			moves[next_state] = depth+1
+			heapq.heappush(queue,(depth-len(next_state[-1])*4,next_state))
 			#queue.append((, depth+1))
 	print('no goal reached')
 
