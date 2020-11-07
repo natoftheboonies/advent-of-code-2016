@@ -1,0 +1,26 @@
+cpy a b				a = b = 7 (a)
+dec b				b = 6 (-=1)
+cpy a d 			d = 7 (a)
+cpy 0 a				a = 0  
+cpy b c 				loop: c = b			optimize lines 5-11 (inst starts at 0))	
+inc a  						loop: a += 1	opt: a += b*d (since c came from b)
+dec c 						c -= 1		
+jnz c -2 					while c != 0 , 		leaving c=0
+dec d 					d -= 1
+jnz d -5				while d != 0			and d=0
+dec b 				b -= 1
+cpy b c 			c = b
+cpy c d 			d = c
+dec d 					loop: d -= 1
+inc c 					c += 1
+jnz d -2 				while d != 0
+tgl c
+cpy -16 c  
+jnz 1 c
+cpy 75 c  
+jnz 78 d
+inc a	  
+inc d
+jnz d -2 
+inc c
+jnz c -5 
