@@ -1,9 +1,11 @@
 from itertools import combinations
 
-sample = '''F4 .  .  .  .  .
+sample = """\
+F4 .  .  .  .  .
 F3 .  .  .  LG .
 F2 .  HG .  .  .
-F1 E  .  HM .  LM '''.splitlines()
+F1 E  .  HM .  LM
+""".splitlines()
 
 # generator +, chip -
 def checkfloor(floor):
@@ -16,7 +18,7 @@ def checkfloor(floor):
 
 def move(state):
 	"""hey, this is the find neighbors"""
-	moves = []
+	#moves = []
 	e, floors = state[0], state[1:]
 	for e_new in [e+1, e-1]:
 		if e_new > 3 or e_new < 0:
@@ -57,8 +59,9 @@ def move(state):
 			if sum(choice)==0:
 				tried_pair = True
 			#print(choice, state_new)
-			moves.append(state_new)
-	return moves
+			yield state_new
+			#moves.append(state_new)
+	#return moves
 
 from collections import deque
 

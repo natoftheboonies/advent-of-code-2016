@@ -1,8 +1,8 @@
 
 
 def show(grid):
-	for x in grid:
-		print(''.join(['#' if c == 1 else ' ' for c in x]))
+	for row in grid:
+		print(''.join(['#' if col == 1 else ' ' for col in row]))
 	print()
 
 def rect(grid, a, b):

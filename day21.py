@@ -1,5 +1,7 @@
 
-def scramble(start, lines):
+
+
+def scramble(start, lines: list):
 	result = list(start)
 	for line in lines:
 		inst = line.strip().split()

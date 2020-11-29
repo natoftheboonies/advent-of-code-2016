@@ -9,14 +9,12 @@ from collections import deque
 
 def moves(pos):
 	x,y = pos
-	m = []
 	for dx,dy in (0,1),(1,0),(-1,0),(0,-1):
 		nx = x+dx
 		ny = y+dy
 		if nx < 0 or ny < 0 or eval(nx,ny) == 1:
 			continue
-		m.append((nx,ny))
-	return m
+		yield (nx,ny)
 
 def bfs(start, goal):
 	assert eval(*goal)==0

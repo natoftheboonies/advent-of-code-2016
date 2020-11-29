@@ -44,7 +44,6 @@ def moves(path,pos):
 	#print(path,doors)
 
 	x,y = pos
-	m = []
 	for dx,dy,dd in U,D,L,R:
 		if doors[whichdoor.index(dd)].isnumeric() or doors[whichdoor.index(dd)]=='a':
 			#print(dd,'locked')
@@ -53,8 +52,7 @@ def moves(path,pos):
 		ny = y+dy
 		if not (0 <= nx < 4 and 0 <= ny < 4):
 			continue
-		m.append(((nx,ny),dd))
-	return m
+		yield ((nx,ny),dd)
 
 def bfs(start, goal):
 	queue = deque()
